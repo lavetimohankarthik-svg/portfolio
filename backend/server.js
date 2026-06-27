@@ -48,32 +48,37 @@ if (!emailRegex.test(email)) {
 
 
 try {
-    await resend.emails.send({
-        from: "Portfolio <onboarding@resend.dev>",
-        to: "mohankarthiklaveti@gmail.com",   // Your email address
+    const { data, error } = await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: "mohankarthiklaveti@gmail.com",
         subject: `New Message from ${name}`,
         html: `
             <h2>New Portfolio Message</h2>
-
             <p><strong>Name:</strong> ${name}</p>
-
             <p><strong>Email:</strong> ${email}</p>
-
             <p><strong>Message:</strong></p>
-
             <p>${message}</p>
-        `
+        `,
     });
 
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
+
+    if (error) {
+        return res.status(500).json({
+            message: error.message,
+        });
+    }
+
     return res.status(200).json({
-        message: "Message sent successfully!"
+        message: "Message sent successfully!",
     });
 
 } catch (err) {
-    console.error(err);
+    console.error("CATCH ERROR:", err);
 
     return res.status(500).json({
-        message: "Failed to send message"
+        message: err.message,
     });
 }
 });
