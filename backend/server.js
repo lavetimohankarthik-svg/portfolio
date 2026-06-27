@@ -3,6 +3,9 @@ const cors = require("cors");  //Allows frontend requests
 const nodemailer = require("nodemailer");  //Sends emails from the "contact-Form"
 require("dotenv").config(); //Reads environment variables from ".env"
 
+console.log("EMAIL:", process.env.EMAIL);
+console.log("PASSWORD EXISTS:", !!process.env.PASSWORD);
+
 const app = express();
 
 // CORS
