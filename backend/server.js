@@ -1,10 +1,7 @@
 const express = require("express");  //Our Backend Server
 const cors = require("cors");  //Allows frontend requests
-const nodemailer = require("nodemailer");  //Sends emails from the "contact-Form"
+const { Resend } = require("resend");  //Sends emails from the "contact-Form"
 require("dotenv").config(); //Reads environment variables from ".env"
-
-console.log("EMAIL:", process.env.EMAIL);
-console.log("PASSWORD EXISTS:", !!process.env.PASSWORD);
 
 const app = express();
 
@@ -15,25 +12,8 @@ app.use(express.json());
 // Debug
 console.log("Backend starting...");
 
-// Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-  },
-});
-
-// Verify login
-transporter.verify((error, success) => {
-    if (error) {
-        console.log("Transporter Error:", error);
-    } else {
-        console.log("Email transporter is ready ✔️");
-    }
-});
+// RESEND transporter
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Test route
 app.get("/", (req, res) => {
@@ -41,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 // Contact route
-app.post("/contact", (req, res) => {
+app.post("/contact", async (req, res) => {
   console.log("📩 /contact hit. Body:", req.body);
 
   const { name, email, message } = req.body;
@@ -62,35 +42,40 @@ if (!emailRegex.test(email)) {
     });
 }
 
-  const mailOptions = {
-    from: process.env.EMAIL,
-    to: process.env.EMAIL,
-    subject: `New Message from ${name}`,
-    html: `
-    <h2>New Portfolio Message</h2>
-
-    <p><strong>Name:</strong> ${name}</p>
-
-    <p><strong>Email:</strong> ${email}</p>
-
-    <p><strong>Message:</strong></p>
-
-    <p>${message}</p>
-`
-  };
 
 
 
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log("EMAIL SEND ERROR:", err);
-      return res.status(500).json({message: "Failed to send message"});
-    }
 
-    console.log("EMAIL SENT SUCCESSFULLY:", info.response);
-    return res.status(200).json({message: "Message sent successfully!"});
-  });
+try {
+    await resend.emails.send({
+        from: "Portfolio <onboarding@resend.dev>",
+        to: "mohankarthiklaveti@gmail.com",   // Your email address
+        subject: `New Message from ${name}`,
+        html: `
+            <h2>New Portfolio Message</h2>
+
+            <p><strong>Name:</strong> ${name}</p>
+
+            <p><strong>Email:</strong> ${email}</p>
+
+            <p><strong>Message:</strong></p>
+
+            <p>${message}</p>
+        `
+    });
+
+    return res.status(200).json({
+        message: "Message sent successfully!"
+    });
+
+} catch (err) {
+    console.error(err);
+
+    return res.status(500).json({
+        message: "Failed to send message"
+    });
+}
 });
 
 // Start server
