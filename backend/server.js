@@ -22,7 +22,6 @@ app.get("/", (req, res) => {
 
 // Contact route
 app.post("/contact", async (req, res) => {
-  console.log("📩 /contact hit. Body:", req.body);
 
   const { name, email, message } = req.body;
 
@@ -61,14 +60,15 @@ try {
     `,
 });
 
-console.log("DATA:", data);
-console.log("ERROR:", error);
-
 if (error) {
+    console.error("Resend Error:", error);
+
     return res.status(500).json({
         message: error.message,
     });
 }
+
+console.log("Email sent successfully:", data);
 
     return res.status(200).json({
         message: "Message sent successfully!",
