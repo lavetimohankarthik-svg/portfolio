@@ -50,7 +50,7 @@ if (!emailRegex.test(email)) {
 try {
     const { data, error } = await resend.emails.send({
     from: "onboarding@resend.dev",
-    to: "mohankarthiklaveti@gmail.com",
+    to: "lavetimohankarthik@gmail.com",
     subject: `New Message from ${name}`,
     html: `
         <h2>New Portfolio Message</h2>
