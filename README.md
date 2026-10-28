@@ -60,21 +60,24 @@ A visual overview of the portfolio.
 
 ### Home / About Section
 
-![Portfolio Home Page](./screenshots/home.png)
+<img width="1902" height="852" alt="Screenshot 2026-10-28 105105" src="https://github.com/user-attachments/assets/fbd6a028-97d7-4a4d-9e19-c240257dc942" />
+<img width="1906" height="857" alt="Screenshot 2026-10-28 105119" src="https://github.com/user-attachments/assets/69848984-3478-465c-affc-26d010747576" />
+
 
 ### Skills Section
 
-![Portfolio Skills Section](./screenshots/skills.png)
+<img width="1917" height="862" alt="Screenshot 2026-10-28 105133" src="https://github.com/user-attachments/assets/1e2a05aa-1ba0-4dbf-9b2a-4bc79061f3d1" />
+
 
 ### Projects Section
 
-![Portfolio Projects Section](./screenshots/projects.png)
+<img width="1917" height="862" alt="Screenshot 2026-10-28 105151" src="https://github.com/user-attachments/assets/a71fe6dc-c21f-4787-a9b9-efa7d0e67534" />
+
 
 ### Education & Contact
 
-![Portfolio Education and Contact Sections](./screenshots/contact.png)
+<img width="1911" height="836" alt="Screenshot 2026-10-28 105207" src="https://github.com/user-attachments/assets/22aac9d1-86f7-4e69-82d2-7b64e8f31960" />
 
-> **Note:** Add your actual screenshots to the `screenshots` directory. Update the image paths if your filenames differ.
 
 ## ⚙️ Installation & Setup
 
